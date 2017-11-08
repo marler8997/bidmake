@@ -1,0 +1,11 @@
+import dlang;
+
+//dlang.exe "helloWorld"
+//{
+//    source "helloWorld.d";
+//}
+dlang.compile "helloWorld"
+{
+    targetType exe;
+    source "helloWorld.d";
+}

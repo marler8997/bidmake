@@ -1,0 +1,43 @@
+BuildContractor dmd
+{
+    SupportedLanguage D;
+
+    SupportedOutputType Executable;
+    SupportedOutputType StaticLibrary;
+
+    Execute dmd
+    {
+        CommandLine
+        {
+            Prefix "-of";
+            AddArgument $(Contract.Name);
+        }
+        CommandLine
+        {
+            // TODO: Make this work without having the ending {}
+            EqualCondition $(Contract.OutputType) StaticLibrary { }
+            AddArgument "-lib";
+        }
+        CommandLine
+        {
+            ExpandList Contract.DLanguageOptions.Version;
+            Prefix "-version=";
+        }
+        CommandLine
+        {
+            ExpandList Contract.DLanguageOptions.StringImportPath;
+            // PreArgument -J
+            Prefix "-J";
+        }
+        CommandLine
+        {
+            ExpandList Contract.Source.File;
+            //Condition "Contract.Source.Language == D";
+        }
+        CommandLine
+        {
+            ExpandList Contract.Library;
+            //Condition "Contract.Source.Language == D";
+        }
+    }
+}

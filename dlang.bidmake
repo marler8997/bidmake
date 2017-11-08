@@ -1,0 +1,89 @@
+enum TargetType
+{
+    exe;
+    staticLibrary;
+    dynamicLibrary;
+    objectFile;
+}
+enum CompileMode
+{
+    debug;
+    release;
+}
+
+interface compile
+{
+    inline filename targetName;
+
+    TargetType targetType;
+    dirpath outputDirectory;
+    dirpath objectDirectory;
+
+    list filepath source;
+    list dirpath includePath;
+    list filepath library;
+
+    // options are different, they should be
+    // configured by each build, but aren't necessarilly apart
+    // or the build contract itself
+    //options
+    //{
+    //    CompileMode mode;
+    //    bool debugSymbols;
+    //}
+}
+
+forwardInterface exe compile
+{
+    targetType exe;
+}
+
+contractor dmd
+{
+    builtin;
+    implement compile;
+    // todo: make a way to specify the default action
+    // probably "default action ..." or "action default ..."
+    action build;
+    action devbuild;
+    action clean;
+
+    //onAction compile
+    //{
+        //Execute dmd
+        //{
+        //    CommandLine
+        //    {
+        //        Prefix "-of";
+        //        AddArgument $(Contract.Name);
+        //    }
+        //    CommandLine
+        //    {
+        //        // TODO: Make this work without having the ending {}
+        //        EqualCondition $(Contract.OutputType) StaticLibrary { }
+        //        AddArgument "-lib";
+        //    }
+        //    CommandLine
+        //    {
+        //        ExpandList Contract.DLanguageOptions.Version;
+        //        Prefix "-version=";
+        //    }
+        //    CommandLine
+        //    {
+        //        ExpandList Contract.DLanguageOptions.StringImportPath;
+        //        // PreArgument -J
+        //        Prefix "-J";
+        //    }
+        //    CommandLine
+        //    {
+        //        ExpandList Contract.Source.File;
+        //        //Condition "Contract.Source.Language == D";
+        //    }
+        //    CommandLine
+        //    {
+        //        ExpandList Contract.Library;
+        //        //Condition "Contract.Source.Language == D";
+        //    }
+        //}
+    //}
+}

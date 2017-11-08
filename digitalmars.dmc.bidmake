@@ -1,0 +1,67 @@
+BuildContractor dmc
+{
+    SupportedLanguage C;
+    SupportedLanguage Cpp;
+
+    SupportedOutputType ObjectFile;
+    SupportedOutputType StaticLibrary;
+    SupportedOutputType Executable;
+
+    Execute dmc
+    {
+        CommandLine
+        {
+            // TODO: Make this work without having the ending {}
+            EqualCondition $(Contract.OutputType) StaticLibrary { }
+            AddArgument "-c";
+        }
+        // TODO: Make this work with an "OrCondition" with the previous CommandLine property
+        CommandLine
+        {
+            // TODO: Make this work without having the ending {}
+            EqualCondition $(Contract.OutputType) ObjectFile { }
+            AddArgument "-c";
+        }
+        CommandLine
+        {
+            AddArgument "-cpp";
+            //Condition "Contract.Source.Language == Cpp";
+        }
+        CommandLine
+        {
+            AddArgument "-wx";
+            //Condition "Contract.CLanguageOptions.WarningsAsErrors == true";
+        }
+        CommandLine
+        {
+            ExpandList Contract.CLanguageOptions.IncludePath;
+            Prefix "-I";
+        }
+        CommandLine
+        {
+            ExpandList Contract.CLanguageOptions.Define;
+            Prefix "-D";
+        }
+        CommandLine
+        {
+            //Condition "Contract.Source.Language == C || Contract.Source.Language == C++";
+            ExpandList Contract.Source.File;
+        }
+    }
+    Execute lib
+    {
+        EqualCondition $(Contract.OutputType) StaticLibrary {}
+        CommandLine
+        {
+            PreArgument "-c";
+            AddArgument $(Contract.Name);
+        }
+        CommandLine
+        {
+            //Condition "Contract.Source.Language == C || Contract.Source.Language == C++";
+            ExpandList Contract.Source.File;
+            StripPath true;
+            ReplaceExtension obj;
+        }
+    }
+}
