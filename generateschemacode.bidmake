@@ -1,0 +1,14 @@
+BuildStep
+{
+    Output
+    {
+        Source
+        {
+            Language D;
+            File bidmake.d;
+        }
+    }
+    CommandLineProgram rdmd;
+    // TODO: add argument
+    // rdmd -g -debug bmschemagen.d standard.bmschema
+}

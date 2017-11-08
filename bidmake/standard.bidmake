@@ -1,0 +1,142 @@
+
+// Current primitive types:
+//  - Bool
+//  - String
+//  - Identifier
+
+
+Interface Named
+{
+    Identifier Name;
+}
+
+Define Configuration
+{
+    List BuildStep BuildStep;
+    List BuildContractor BuildContractor;
+    List BuildContract BuildContract;
+}
+
+Define BuildContract
+{
+    Implement Named;
+
+    // Note: this implements the Named interface
+    OptionalInlineProperty Identifier Name;
+
+    Property String OutputType;
+
+    Property String OutputName;
+
+    List Identifier DependsOn;
+
+    Property CLanguageOptions CLanguageOptions;
+    Property DLanguageOptions DLanguageOptions;
+
+    List String Library;
+
+    List Source Source;
+}
+
+Define CLanguageOptions
+{
+    Property Bool WarningsAsErrors;
+
+    List String IncludePath;
+
+    // TODO: would be nice to define CDefine inside this definition to limit
+    //       it's scope
+    List String Define;
+    //List CDefine Define;
+}
+
+//Define CDefine
+//{
+//    RequiredInlineProperty String Name;
+//    OptionalInlineProperty String Value;
+//}
+
+
+Define DLanguageOptions
+{
+    List String StringImportPath;
+    List String Version;
+}
+
+Define BuildContractor
+{
+    Implement Named;
+
+    // Note: this implements the Named interface
+    RequiredInlineProperty Identifier Name;
+
+    List String SupportedOutputType;
+    List String SupportedLanguage;
+
+    List Execute Execute;
+}
+
+Define Execute
+{
+    RequiredInlineProperty Identifier Name;
+    List EqualCondition EqualCondition;
+    List CommandLine CommandLine;
+}
+
+Define CommandLine
+{
+    // A list to expand for command line arguments
+    Property String ExpandList;
+    // An argument to add
+    Property String AddArgument;
+
+    List EqualCondition EqualCondition;
+
+    Property Bool StripPath;
+    Property String ReplaceExtension;
+
+    // If specified, join the arguments into 1 argument
+    Property String Join;
+    // A string to prefix each argument with
+    Property String Prefix;
+    // A string to postix each argument with
+    Property String Postfix;
+    // A prefix command line argument
+    Property String PreArgument;
+    // A postfix command line argument
+    Property String PostArgument;
+}
+
+Define EqualCondition
+{
+    RequiredInlineProperty String Left;
+    RequiredInlineProperty String Right;
+}
+
+Define BuildStep
+{
+    Implement Named;
+
+    // Note: this implements the Named interface
+    OptionalInlineProperty Identifier Name;
+
+    List Source Source;
+
+    List String DependsOn;
+
+    List Execute Execute;
+
+    Property Output Output;
+}
+
+Define Source
+{
+    Property String Language;
+    List String File;
+}
+
+Define Output
+{
+    List Source Source;
+    List String Executable;
+}
