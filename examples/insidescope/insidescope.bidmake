@@ -1,0 +1,8 @@
+import dlang;
+
+dlang.compile "helloWorld"
+{
+    targetType exe;
+    define filepath insidescope "insidescope.d";
+    source insidescope;
+}

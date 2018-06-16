@@ -1,0 +1,6 @@
+import git;
+
+git.repo
+{
+    url "https://github.com/marler8997/mored";
+}

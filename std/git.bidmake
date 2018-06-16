@@ -1,0 +1,31 @@
+
+interface repo
+{
+    // TODO: should there be a 'url' type?
+    string url;
+    string commit;
+    // todo: if dir is not specified, there should be a default value
+    dirpath dir
+    {
+        default findGitRepo(parentDir(contract.sourceFile), url);
+    }
+    // TODO:
+    // option: override the url, could even override it with
+    // a local path
+    // option: override the commit
+}
+
+contractor git
+{
+    builtin;
+    implement repo;
+
+    // The 'download' action will download the repository
+    // to the local file system and checkout the configured commit.
+    // If the repository is already downloaded it WILL NOT
+    // try to update the repo from the url, to do that you can
+    // run the "update" action.
+    action download; // default
+    action update; // update the git repository from the url
+    action clean;
+}

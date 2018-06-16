@@ -1,0 +1,11 @@
+import dlang;
+
+define dirpath outDir "out";
+define dirpath srcDir "src";
+
+dlang.compile "usingdefines"
+{
+    targetType exe;
+    outputDirectory outDir;
+    source "src/usingdefines.d";
+}

@@ -1,0 +1,12 @@
+
+// include via directory
+include helloWorld;
+
+// include via file
+include usingdefines/usingdefines.bidmake;
+
+include usingfunctions;
+
+include predefinedvars;
+
+include insidescope;

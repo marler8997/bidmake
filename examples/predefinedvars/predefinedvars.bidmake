@@ -1,0 +1,7 @@
+import dlang;
+
+dlang.compile "predefinedvars"
+{
+    targetType exe;
+    source path(os, "main.d");
+}
