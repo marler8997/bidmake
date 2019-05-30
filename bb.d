@@ -1,3 +1,4 @@
+#!/usr/bin/env rund
 //!importPath ../mored
 
 import std.stdio;
